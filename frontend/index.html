@@ -1,52 +1,86 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>VitaForge — AI Resume Studio</title>
 <meta name="author" content="Nikhil Chary Sriramoju">
-<meta name="description" content="Upload a resume, get an ATS score, and generate a 95+ one-page ATS resume. Designed and developed by NIKHIL CHARY SRIRAMOJU.">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="theme-color" content="#050816"><meta property="og:title" content="VitaForge — AI Resume Studio"><meta property="og:description" content="Upload a resume, get an ATS score, build a 95+ one-page resume. By Nikhil Chary Sriramoju."><link rel="stylesheet" href="css/style.css"></head><body>
-<canvas id="bg"></canvas>
-<header class="nav"><b class="logo">VITA<i>FORGE</i></b><span class="cr">Designed &amp; developed by <a href="https://github.com/Nikhil-creat" target="_blank" rel="noopener">NIKHIL CHARY SRIRAMOJU</a></span></header>
-<main>
-<section class="hero"><p class="eyebrow">AGENTIC AI · RAG · CNN SCAN · DOCKER · 100% LOCAL</p>
-<h1>Upload your resume.<br><span class="gl">Get a 95+ ATS one-pager.</span></h1>
-<div class="glass drop" id="drop"><div class="laser"></div>
+<meta name="description" content="Upload a resume, get an ATS score, and forge a 95+ one-page ATS resume with an AI agent, RAG and Groq. Designed and developed by NIKHIL CHARY SRIRAMOJU.">
+<meta property="og:title" content="VitaForge — AI Resume Studio"><meta property="og:description" content="Upload a resume, get an ATS score, build a 95+ one-page resume. By Nikhil Chary Sriramoju.">
+<meta name="theme-color" content="#0F1B3D"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<nav><div class="wrap"><a class="logo" href="#top">Vita<i>Forge</i>.</a>
+<a class="l" href="#studio">Builder</a><a class="l" href="#assistant">Assistant</a><a class="l" href="#tech">How it works</a><a class="l" href="#docker">Docker</a>
+<button class="tgl" id="theme" aria-label="Toggle theme">◐</button><a class="btn" href="#upload">Start building</a></div></nav>
+
+<header class="hero" id="top"><div class="blob b1"></div><div class="blob b2"></div>
+<div class="wrap hg"><div>
+<h1>Resumes that forge themselves with you.</h1>
+<p class="lead">Upload your old resume. VitaForge scores it, then an AI agent drafts, critiques and revises every line, grounded in a library of proven achievements and checked for ATS layout.</p>
+<a class="btn" href="#upload">Analyze my resume</a> <a class="btn g" href="#tech">See the AI stack</a>
+<div class="tags"><span class="tag">Personal AI assistant</span><span class="tag">Agentic AI</span><span class="tag">RAG</span><span class="tag">CNN layout scan</span><span class="tag">Groq</span><span class="tag">Docker</span></div></div>
+<div class="hvis"><div class="hsheet" aria-hidden="true"><h4>Nikhil Chary Sriramoju</h4><div class="r">Full-Stack Developer · AI/ML &amp; Data Analytics</div><div class="ln" style="width:70%"></div>
+<p style="margin-top:12px"><b>Summary</b><br><span id="ty"></span><span class="caret"></span></p><div class="ln" style="width:92%;margin-top:14px"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:86%"></div></div>
+<div class="fchip" style="top:0;left:-6px">ATS score 96</div><div class="fchip" style="bottom:10px;right:-4px;animation-delay:-2s">Agent: revising bullet 2</div></div></div></header>
+
+<section id="upload"><div class="wrap"><h2>Upload &amp; analyze</h2><p class="sub">Drop a PDF, DOCX or TXT, or paste the text. Parsing and scoring run in your browser (or on your own server).</p>
+<div class="panel drop" id="drop"><div class="laser"></div>
 <p><b>Drop PDF / DOCX / TXT</b> or <label class="lnk">browse<input type="file" id="file" accept=".pdf,.docx,.txt,.md" hidden></label></p>
 <textarea id="raw" placeholder="…or paste your resume text here"></textarea>
-<textarea id="jd" style="min-height:60px" placeholder="Optional: paste a job description for keyword matching"></textarea>
-<div class="row"><button class="btn" id="go">Analyze resume</button><button class="btn ghost" id="sample">Load sample</button></div>
-<p class="mu" id="stat">Your file never leaves your browser.</p></div></section>
+<textarea id="jd" style="min-height:64px" placeholder="Optional: paste a job description for keyword matching"></textarea>
+<div class="row"><button class="btn" id="go">Analyze resume</button><button class="btn g" id="sample">Load sample</button></div>
+<p class="mu" id="stat">Your file never leaves your browser unless you use the AI features.</p></div></div></section>
 
-<section id="report" hidden><div class="two">
-<div class="glass"><h2>ATS score</h2><div class="gwrap"><svg viewBox="0 0 140 140" class="gauge"><defs><linearGradient id="gg"><stop offset="0" stop-color="#4DE1FF"/><stop offset="1" stop-color="#6CFFB0"/></linearGradient></defs><circle cx="70" cy="70" r="56" class="gt"/><circle id="gv" cx="70" cy="70" r="56" class="gf"/></svg><div class="gn"><b id="gnum">0</b><span>/100</span></div></div>
-<p class="center" id="ba"></p><div id="bars"></div></div>
-<div class="glass"><h2>Fix list</h2><div id="issues"></div><h2 style="margin-top:18px">Layout scan <small class="mu">CNN-style visual pipeline</small></h2><div class="pipe" id="pipe"></div><div id="checks"></div><div id="kw"></div></div></div></section>
+<section id="report"><div class="wrap"><div class="two">
+<div class="panel"><h3>ATS score</h3><div class="gwrap"><svg viewBox="0 0 140 140" class="gauge"><circle cx="70" cy="70" r="56" class="gt"/><circle id="gv" cx="70" cy="70" r="56" class="gf"/></svg><div class="gn"><b id="gnum">0</b><span>/ 100</span></div></div>
+<p class="center mono" id="ba"></p><div id="bars"></div></div>
+<div class="panel"><h3>Fix list</h3><div id="issues"></div><h3 style="margin-top:18px">Layout scan <small class="mu">CNN-style pipeline</small></h3><div class="pipe" id="pipe"></div><div id="checks"></div><div id="kw"></div></div></div></div></section>
 
-<section id="studio" data-after hidden><h2 class="sec">Resume studio</h2>
-<div class="bar2"><button class="btn" id="opt">⚡ Auto-optimize with agent</button><button class="btn ghost" id="pdf">Download PDF</button><button class="btn ghost" id="txt">.txt</button><button class="btn ghost" id="htm">.html</button><button class="btn ghost" id="doc">.docx (Word)</button><span class="live" id="live"></span><span id="fitMsg"></span></div>
-<div class="studio"><div class="glass" id="form"></div><div class="swrap"><div id="sheet"><div id="rb"></div></div></div></div></section>
+<section><div class="wrap"><h2>Everything a strong resume needs</h2>
+<div class="grid">
+<div class="card rv"><div class="ic">💬</div><h3>Personal assistant</h3><p>Ask for a better summary, stronger bullets or a match against a job post. It works from your own details.</p></div>
+<div class="card rv"><div class="ic">🔁</div><h3>Agentic improvement</h3><p>An agent plans, retrieves, drafts, critiques and revises, and shows each step so you stay in control.</p></div>
+<div class="card rv"><div class="ic">📚</div><h3>RAG achievement library</h3><p>Suggestions are retrieved from vetted, metric-driven bullets that fit your skills and role.</p></div>
+<div class="card rv"><div class="ic">🧠</div><h3>CNN layout scan</h3><p>A layout pipeline checks that sections are readable by applicant tracking systems.</p></div></div></div></section>
 
-<section id="agent" data-after hidden><div class="two">
-<div class="glass"><h2>Agent console</h2><div id="term" class="term"></div>
-<form id="cmd" class="row"><input id="q" placeholder="Ask: why is my score low? / suggest bullets / match job / page fit" aria-label="Ask the assistant"><button class="btn">Ask</button></form></div>
-<div class="glass"><h2>RAG achievement library</h2><p class="mu">Templates retrieved for your skills. Replace the numbers with your real results; keep only what is true.</p><div id="rag"></div></div></div></section>
+<section id="studio"><div class="wrap"><h2>Build your resume</h2><p class="sub">Fill in the fields. The preview and ATS score update as you type. Export a real Word file or PDF.</p>
+<div class="bg"><div class="panel" id="form"></div>
+<div><div class="panel"><div class="top"><button class="btn" id="opt">⚡ Auto-optimize</button><button class="btn g" id="pdf">PDF</button><button class="btn g" id="doc">.docx (Word)</button><button class="btn g" id="txt">.txt</button><button class="btn g" id="htm">.html</button></div>
+<div class="top"><span class="live" id="live"></span><span id="fitMsg"></span></div>
+<div class="swrap"><div id="sheet"><div id="rb"></div></div></div></div></div></div></div></section>
 
-<section id="ai" data-after hidden><div class="glass"><div class="aih"><h2>AI Copilot <small class="mu">Groq · Llama</small></h2><span id="aistat" class="chip">checking…</span></div>
-<p class="mu">Runs on your own backend. The Groq key never reaches the browser. If the API is offline, local templates are used instead.</p>
-<div class="row" id="aib"><button class="btn" data-a="agent">🤖 Agent: RAG + critic</button><button class="btn ghost" data-a="review">AI review</button><button class="btn ghost" data-a="cover_letter">Cover letter</button><button class="btn ghost" data-a="tailor">Tailor to job</button><button class="btn ghost" data-a="linkedin">LinkedIn</button><button class="btn ghost" data-a="interview_questions">Interview Qs</button></div>
+<section id="assistant"><div class="wrap"><h2>Your personal AI assistant</h2><p class="sub">It reads your resume above, retrieves examples from the achievement library and runs an agent loop you can watch.</p>
+<div class="bg"><div class="panel"><h3>Agent console</h3><div id="term" class="term"></div>
+<form id="cmd" class="row" onsubmit="return false"><input class="fi" id="q" type="text" style="flex:1;margin:0" placeholder="Ask: why is my score low? / suggest bullets / match job / page fit" aria-label="Ask the assistant"><button class="btn">Ask</button></form></div>
+<div class="panel"><h3>RAG achievement library</h3><p class="mu">Templates retrieved for your skills. Replace the numbers with your real results and keep only what is true.</p><div id="rag"></div></div></div>
+
+<div class="panel" id="ai" style="margin-top:20px"><div class="aih"><h3>AI Copilot <small class="mu">Groq · Llama</small></h3><span id="aistat" class="chip">checking…</span></div>
+<p class="mu">Runs on your own backend, so the Groq key never reaches the browser. If the API is offline, local templates are used.</p>
+<div class="row" id="aib"><button class="btn" data-a="agent">🤖 Agent: RAG + critic</button><button class="btn g" data-a="review">AI review</button><button class="btn g" data-a="cover_letter">Cover letter</button><button class="btn g" data-a="tailor">Tailor to job</button><button class="btn g" data-a="linkedin">LinkedIn</button><button class="btn g" data-a="interview_questions">Interview Qs</button></div>
 <div id="aiout" class="aiout" aria-live="polite">Pick an action. The company and role fields in the toolkit below feed the cover letter.</div>
-<div class="row"><button class="btn off" id="aiapply">Apply to resume</button><button class="btn ghost off" id="aiundo">Undo</button></div>
-<div class="two" style="margin-top:18px"><div><h3>Mock interview</h3><p id="iqq" class="aiout" style="min-height:60px">Press “New question”.</p><textarea id="ians" placeholder="Type or dictate your answer"></textarea><div class="row"><button class="btn ghost" id="iq">New question</button><button class="btn ghost" id="mic">🎙 Dictate</button><button class="btn" id="ifb">Get feedback</button></div></div>
-<div><h3>Career chat</h3><div id="cmsgs" class="aiout" style="height:230px"></div><form id="cform" class="row"><input class="fi" id="cin" type="text" style="flex:1;margin:0" placeholder="Ask your career copilot…" aria-label="Chat message"><button class="btn">Send</button></form></div></div></div></section>
-<section id="toolkit" data-after hidden><div class="glass"><h2>Career toolkit</h2><p class="mu">Generated locally from your resume. Edit before using.</p>
+<div class="row"><button class="btn off" id="aiapply">Apply to resume</button><button class="btn g off" id="aiundo">Undo</button></div>
+<div class="two" style="margin-top:18px"><div><h3>Mock interview</h3><p id="iqq" class="aiout" style="min-height:60px">Press “New question”.</p><textarea id="ians" placeholder="Type or dictate your answer"></textarea><div class="row"><button class="btn g" id="iq">New question</button><button class="btn g" id="mic">🎙 Dictate</button><button class="btn" id="ifb">Get feedback</button></div></div>
+<div><h3>Career chat</h3><div id="cmsgs" class="aiout" style="height:230px"></div><form id="cform" class="row"><input class="fi" id="cin" type="text" style="flex:1;margin:0" placeholder="Ask your career copilot…" aria-label="Chat message"><button class="btn">Send</button></form></div></div></div>
+
+<div class="panel" id="toolkit" style="margin-top:20px"><h3>Career toolkit <small class="mu">local templates</small></h3>
 <div class="row"><input class="fi" id="co" type="text" placeholder="Company (optional)" style="flex:1"><input class="fi" id="role" type="text" placeholder="Role (optional)" style="flex:1"></div>
-<div class="row" id="tkb"><button class="btn ghost" data-k="cl">Cover letter</button><button class="btn ghost" data-k="iq">Interview questions</button><button class="btn ghost" data-k="li">LinkedIn headline + About</button><button class="btn ghost" data-k="ta">Tailor to job</button><button class="btn" id="tcopy">Copy</button></div>
-<textarea id="tout" aria-label="Generated text"></textarea></div></section>
-<section class="stack"><h2 class="sec">Under the hood</h2><div class="cards">
-<div class="glass"><h3>Agentic AI</h3><p>Plan → retrieve → rewrite → verify loop with a visible trace.</p></div>
-<div class="glass"><h3>RAG</h3><p>Similarity search over a curated achievement library.</p></div>
-<div class="glass"><h3>CNN scan</h3><p>Layout pipeline visual plus rule-based ATS safety checks.</p></div>
-<div class="glass"><h3>Docker</h3><p><code>docker compose up</code> serves it on port 8080 via nginx.</p></div>
-<div class="glass"><h3>Private</h3><p>Parsing and scoring run locally. No uploads, no tracking.</p></div><div class="glass"><h3>Installable</h3><p>Works as a PWA: install it and reuse it offline.</p></div></div></section>
-</main>
-<footer>© 2026 · Designed &amp; developed by <b>NIKHIL CHARY SRIRAMOJU</b> · <a href="https://github.com/Nikhil-creat" target="_blank" rel="noopener">GitHub</a> · <a href="https://in.linkedin.com/in/nikhil-chary-sriramoju-95041b38a" target="_blank" rel="noopener">LinkedIn</a> · <button class="chip" id="clr">Clear saved data</button></footer>
+<div class="row" id="tkb"><button class="btn g" data-k="cl">Cover letter</button><button class="btn g" data-k="iq">Interview questions</button><button class="btn g" data-k="li">LinkedIn headline + About</button><button class="btn g" data-k="ta">Tailor to job</button><button class="btn" id="tcopy">Copy</button></div>
+<textarea id="tout" aria-label="Generated text"></textarea></div></div></section>
+
+<section id="tech"><div class="wrap"><h2>Under the hood</h2>
+<div class="grid"><div class="card rv"><h3>RAG</h3><p>Your skills and title become a query, matched against the achievement library with TF-IDF similarity. The closest examples ground the draft. Production can swap in embeddings and a vector database.</p></div>
+<div class="card rv"><h3>Agentic AI</h3><p>A planner diagnoses, retrieves, rewrites and runs a critic. Any number the model invents is replaced with [X], so facts stay yours.</p></div>
+<div class="card rv"><h3>CNN-style scan</h3><p>The visual pipeline animates layout stages, while rule-based checks verify single column, standard headings and one page.</p></div>
+<div class="card rv"><h3>Private by design</h3><p>Scoring runs locally. The Groq key lives only on the server. Installable as a PWA.</p></div></div></div></section>
+
+<section id="docker"><div class="wrap"><h2>Ships in Docker</h2><p class="sub">One container serves the API and the website. One command starts it.</p>
+<div class="svc" id="svc"></div>
+<pre id="yml">services:
+  vitaforge:
+    build: .                    # FastAPI + static frontend
+    ports: ["8000:8000"]
+    env_file: .env              # GROQ_API_KEY stays server-side
+    restart: unless-stopped</pre>
+<div style="margin:14px 0"><button class="btn" id="up">docker compose up</button></div>
+<pre id="dlog" class="dlog">$ _</pre></div></section>
+
+<footer><div class="wrap">VitaForge · Designed &amp; developed by <b>NIKHIL CHARY SRIRAMOJU</b> · <a href="https://github.com/Nikhil-creat" target="_blank" rel="noopener">GitHub</a> · <a href="https://in.linkedin.com/in/nikhil-chary-sriramoju-95041b38a" target="_blank" rel="noopener">LinkedIn</a> · <button class="chip" id="clr">Clear saved data</button></div></footer>
 <script src="config.js"></script><script src="js/app.js"></script><script src="js/export.js"></script><script src="js/ai.js"></script></body></html>

@@ -11,6 +11,7 @@ Browser (frontend/)  ──►  FastAPI (backend/app)  ──►  Groq API (Llam
 ```
 
 ## Features
+- Quill-style UI (light/dark, animated hero, Docker demo), prefilled studio
 - Local ATS scoring (10-part rubric), live gauge, one-page auto-fit, export real DOCX (Word, validated), PDF (print to PDF), .txt, .html
 - **Agent** (`/api/agent/run`): diagnose → RAG retrieve → rewrite → critic → revise → guardrail. Any number the model invents is replaced with `[X]`.
 - AI review, cover letter, tailor-to-job, LinkedIn, interview questions, mock-interview feedback (with voice dictation), streaming career chat

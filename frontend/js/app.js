@@ -42,10 +42,10 @@ PaperTrail, RAG study assistant | Python, FastAPI, Qdrant
 EDUCATION
 B.Tech, Computer Science and Engineering | JNTU Hyderabad | 2022 - 2026
 CERTIFICATIONS
-AWS Cloud Practitioner (2025), Forage Software Engineering Job Simulation (2025)
+- AWS Cloud Practitioner (2025), Forage Software Engineering Job Simulation (2025)
 ACHIEVEMENTS
-Finalist, college hackathon 2025 (top 10 of 120 teams)
-Solved 300+ problems on coding platforms`;
+- Finalist, college hackathon 2025 (top 10 of 120 teams)
+- Solved 300+ problems on coding platforms`;
 const glue=ls=>{const o=[];let m='';for(const l of ls){if(/^[•●▪◦·\-–*▸►▶➤✓✔❖‣○]$/.test(l)){m=l+' ';continue}o.push(m+l);m=''}return o};
 const mergeL=ls=>{const o=[];let inB=0;for(const l of ls){if(BUL.test(l)){const tx=l.replace(BUL,'');if(inB&&o.length&&/^[a-z0-9(\[]/.test(tx)&&!/[.!?:]$/.test(o[o.length-1])){o[o.length-1]+=' '+tx;continue}o.push(l);inB=1}else if(inB&&o.length&&(/^[a-z0-9(\[$%&\/]/.test(l)||(!/ — | – |\s\|\s/.test(l)&&!/\b(19|20)\d\d\b/.test(l)&&!/[.!?:]$/.test(o[o.length-1])&&!/^[A-Z][a-z]+ [A-Z]/.test(l)))){o[o.length-1]+=' '+l}else{o.push(l);inB=0}}return o};
 function parse(t){const L=glue(t.replace(/\r/g,'').split('\n').map(l=>l.trim()).filter(Boolean)),all=L.join(' '),d=Object.fromEntries(F.map(k=>[k,'']));
@@ -153,8 +153,7 @@ $('#cmd').onsubmit=e=>{e.preventDefault();const q=$('#q').value.trim().toLowerCa
  else if(/job|jd|keyword|match/.test(q))log(r.miss.length?'Missing job keywords: '+r.miss.join(', '):'Paste a job description above, or no keywords are missing.');
  else if(/page|fit|length/.test(q))log($('#fitMsg').textContent+' · '+textOf(d).split(/\s+/).length+' words');
  else log('Try: why is my score low · suggest bullets · match job · page fit')};
-try{const s=JSON.parse(localStorage.getItem('vitaforge')||'null');if(s&&s.name){$('#raw').value='';$('#stat').textContent='Previous session found: paste or upload to start fresh.'}}catch(_){}
-(()=>{const c=$('#bg'),x=c.getContext('2d');if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;let w,h,P;const rs=()=>{w=c.width=innerWidth;h=c.height=innerHeight;P=Array.from({length:Math.min(70,w/16|0)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))};rs();addEventListener('resize',rs);
+(()=>{const c=$('#bg'),x=c.getContext('2d');if(matchMedia('(prefers-reduced-motion:reduce)').matches||getComputedStyle(c).display==='none')return;let w,h,P;const rs=()=>{w=c.width=innerWidth;h=c.height=innerHeight;P=Array.from({length:Math.min(70,w/16|0)},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))};rs();addEventListener('resize',rs);
  (function L(){x.clearRect(0,0,w,h);P.forEach((p,i)=>{p.x=(p.x+p.vx+w)%w;p.y=(p.y+p.vy+h)%h;x.fillStyle='#4de1ff';x.fillRect(p.x,p.y,2,2);for(let j=i+1;j<P.length;j++){const q=P[j],dd=Math.hypot(p.x-q.x,p.y-q.y);if(dd<120){x.strokeStyle=`rgba(77,225,255,${.2*(1-dd/120)})`;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}}});requestAnimationFrame(L)})()})();
 const tk={cl:()=>coverLetter(getData(),$('#jd').value,$('#co').value.trim(),$('#role').value.trim()),iq:()=>interviewQs(getData()),li:()=>linkedin(getData()),ta:()=>tailor(getData(),$('#jd').value)};
 $('#tkb').onclick=e=>{const k=e.target.dataset.k;if(k)$('#tout').value=tk[k]()};
@@ -162,3 +161,13 @@ $('#tcopy').onclick=async()=>{try{await navigator.clipboard.writeText($('#tout')
 $('#doc').onclick=()=>dl('resume.doc','<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><meta charset="utf-8"><style>body{font:11pt Arial}h1{font-size:20pt}h2{font-size:11pt;text-transform:uppercase;border-bottom:1px solid #000}</style><body>'+$('#rb').innerHTML+'</body></html>','application/msword');
 $('#clr').onclick=()=>{try{localStorage.removeItem('vitaforge')}catch(_){}location.reload()};
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/* ---- Quill-style page init: prefilled studio, preview scaling, theme, hero typing, docker demo ---- */
+(()=>{const blank=Object.fromEntries(F.map(k=>[k,'']));let d;try{const sv=JSON.parse(localStorage.getItem('vitaforge')||'null');d=sv&&sv.name?{...blank,...sv}:parse(SAMPLE)}catch(_){d=parse(SAMPLE)}
+ setData(d);refresh();log('Ready. Upload a resume above, or edit the sample. Then press Auto-optimize.','a');
+ const sc=()=>{const w=document.querySelector('.swrap');if(!w)return;const s=Math.min(1,(w.parentElement.clientWidth-30)/794);document.documentElement.style.setProperty('--s',Math.max(.3,s).toFixed(3))};addEventListener('resize',sc);sc();setTimeout(sc,300);
+ const th=$('#theme'),root=document.documentElement;try{const t=localStorage.getItem('vf-theme');if(t)root.dataset.theme=t}catch(_){}th.onclick=()=>{const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;root.dataset.theme=dark?'light':'dark';try{localStorage.setItem('vf-theme',root.dataset.theme)}catch(_){}};
+ const t="Final-year CSE student who ships production-style systems end to end: CI-tested APIs, Docker and applied AI.";let i=0;const el=$('#ty');if(el){const n=()=>{el.textContent=t.slice(0,++i);if(i<t.length)setTimeout(n,34)};setTimeout(n,500)}
+ const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.12});$$('.rv').forEach(x=>io.observe(x));
+ const SV=[['web','Static frontend'],['api','FastAPI /api'],['rag','TF-IDF index'],['agent','Agent loop'],['groq','Groq Cloud']];$('#svc').innerHTML=SV.map(x=>`<div class="sv" id="v-${x[0]}"><b><span class="dot"></span>${x[0]}</b>${x[1]}</div>`).join('');
+ $('#up').onclick=async()=>{const L=$('#dlog');L.textContent='$ docker compose up --build\n';$$('.sv').forEach(x=>x.classList.remove('up'));for(const k of ['rag','api','agent','web','groq']){await sleep(480);L.textContent+=k==='groq'?'✔ Groq reachable (key read from server env)\n':'✔ '+k+'  ready\n';$('#v-'+k).classList.add('up')}L.textContent+='→ http://localhost:8000'}})();

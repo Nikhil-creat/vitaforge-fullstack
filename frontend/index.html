@@ -65,11 +65,14 @@
 <div class="row" id="tkb"><button class="btn g" data-k="cl">Cover letter</button><button class="btn g" data-k="iq">Interview questions</button><button class="btn g" data-k="li">LinkedIn headline + About</button><button class="btn g" data-k="ta">Tailor to job</button><button class="btn" id="tcopy">Copy</button></div>
 <textarea id="tout" aria-label="Generated text"></textarea></div></div></section>
 
-<section id="tech"><div class="wrap"><h2>Under the hood</h2>
-<div class="grid"><div class="card rv"><h3>RAG</h3><p>Your skills and title become a query, matched against the achievement library with TF-IDF similarity. The closest examples ground the draft. Production can swap in embeddings and a vector database.</p></div>
-<div class="card rv"><h3>Agentic AI</h3><p>A planner diagnoses, retrieves, rewrites and runs a critic. Any number the model invents is replaced with [X], so facts stay yours.</p></div>
-<div class="card rv"><h3>CNN-style scan</h3><p>The visual pipeline animates layout stages, while rule-based checks verify single column, standard headings and one page.</p></div>
-<div class="card rv"><h3>Private by design</h3><p>Scoring runs locally. The Groq key lives only on the server. Installable as a PWA.</p></div></div></div></section>
+<section id="tech"><div class="wrap"><h2>Under the hood</h2><p class="sub">Tap a stage to see what runs there. Everything here is real code from this repo, and the demos below run live in your browser.</p>
+<div class="flow" id="flow"></div><div class="track" aria-hidden="true"><i class="pkt"></i></div>
+<div class="tgrid"><div class="panel fdet" id="fdet" aria-live="polite"></div>
+<div class="panel"><h3>Live RAG search</h3><p class="mu">Type skills or a topic. The library returns the closest achievement templates (TF-IDF similarity).</p><input class="fi" id="ragq" type="text" value="docker api latency" aria-label="RAG query"><div id="ragout"></div></div></div>
+<div class="tgrid"><div class="panel"><h3>Live guardrail</h3><p class="mu">The agent may never invent numbers. Edit the AI draft and see what gets replaced.</p>
+<label class="mu">Your original bullet<input class="fi" id="gorig" type="text" value="Built APIs used by 12k users"></label>
+<label class="mu">AI draft<input class="fi" id="gnew" type="text" value="Built APIs used by 12k users at 99% uptime, saving 40 hours"></label><div class="aiout" id="gout" style="min-height:70px"></div></div>
+<div class="panel"><h3>By the numbers</h3><div class="stats"><div><b data-n="10">0</b><span>ATS checks</span></div><div><b data-n="12">0</b><span>library templates in the browser</span></div><div><b data-n="4">0</b><span>export formats</span></div><div><b data-n="0">0</b><span>API keys in the browser</span></div></div></div></div></div></section>
 
 <section id="docker"><div class="wrap"><h2>Ships in Docker</h2><p class="sub">One container serves the API and the website. One command starts it.</p>
 <div class="svc" id="svc"></div>
@@ -83,4 +86,4 @@
 <pre id="dlog" class="dlog">$ _</pre></div></section>
 
 <footer><div class="wrap">VitaForge · Designed &amp; developed by <b>NIKHIL CHARY SRIRAMOJU</b> · <a href="https://github.com/Nikhil-creat" target="_blank" rel="noopener">GitHub</a> · <a href="https://in.linkedin.com/in/nikhil-chary-sriramoju-95041b38a" target="_blank" rel="noopener">LinkedIn</a> · <button class="chip" id="clr">Clear saved data</button></div></footer>
-<script src="config.js"></script><script src="js/app.js"></script><script src="js/export.js"></script><script src="js/ai.js"></script></body></html>
+<script src="config.js"></script><script src="js/app.js"></script><script src="js/export.js"></script><script src="js/ai.js"></script><script src="js/tech.js"></script></body></html>
